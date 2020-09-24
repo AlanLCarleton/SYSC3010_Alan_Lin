@@ -1,6 +1,5 @@
 from sense_hat import SenseHat
 #from sense_emu import SenseHat
-
 import time
 
 sense = SenseHat()
@@ -48,10 +47,6 @@ number = [
 0,0,0,1
 ]
 
-hour_color = [0,255,0] # Green
-minute_color = [255,125,0] # Orange
-empty = [0,0,0] # Black
-
 clock_image = [
 0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,
@@ -85,12 +80,12 @@ def displayTime():
     for index in range(0, 64):
         if (clock_image[index]):
             if index < 32:
-                clock_image[index] = hour_color
+                clock_image[index] = [0,0,255] # Blue
             else:
-                clock_image[index] = minute_color
+                clock_image[index] = [255,125,0] # Orange
         else:
-            clock_image[index] = empty
-
+            clock_image[index] = [0,0,0] # Black
+            
     # Display the time
     sense.low_light = True # Optional
     sense.set_pixels(clock_image)
@@ -99,17 +94,24 @@ def displayTime():
 def displayTemperature():
     temperature = round(sense.get_temperature())
     message = 'T=%dC' %(temperature)
-    sense.show_message(message, scroll_speed=(0.08), text_colour=[200,240,200], back_colour=[0,0,0])
-    
+    #scroll display the temperature
+    sense.show_message(message, scroll_speed=(0.1), text_colour=[120,255,0], back_colour=[0,0,0])  
 
 def displayHumidity():
     humidity = round(sense.get_humidity())
     message = 'P=%dmPa' %(humidity)
-    sense.show_message(message, scroll_speed=(0.08), text_colour=[200,240,200], back_colour=[0,0,0])
+    #scroll display the humidity
+    sense.show_message(message, scroll_speed=(0.1), text_colour=[255,255,255], back_colour=[0,0,0])
 
-    
 while True:
-    displayTemperature()
-    displayHumidity()
+    for event in sense.stick.get_events():
+        #when joystick is pressed
+        if event.action == "pressed":
+            #left arrow press toggles a temporary temperature display
+            if event.direction == "left":
+                displayTemperature()
+            #right arrow press toggles a temporary humidity display
+            elif event.direction == "right":
+                displayHumidity()
+    # Time is displayed by default
     displayTime()
-    time.sleep(3)
