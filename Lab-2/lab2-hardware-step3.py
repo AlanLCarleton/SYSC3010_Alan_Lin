@@ -4,6 +4,8 @@ import time
 
 sense = SenseHat()
 
+#Fndation of the clock display from: https://www.thegeekpub.com/13751/sense-hat-clock-for-the-raspberry-pi/
+#Author of this source: Mike Murray
 number = [
 0,1,1,1, # Zero
 0,1,0,1,
