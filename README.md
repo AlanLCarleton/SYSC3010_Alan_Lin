@@ -4,4 +4,6 @@ This is the README file
 	
 Lab 1: Completed
 
-Lab 2: WIP
+Lab 2: Completed
+
+Lab 3: WIP
