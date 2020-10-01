@@ -6,4 +6,4 @@ Lab 1: Completed
 
 Lab 2: Completed
 
-Lab 3: WIP
+Lab 3: Completed
